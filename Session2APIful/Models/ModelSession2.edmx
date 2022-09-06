@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Sessao2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Estadio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Imagens">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Arquivo" Type="image" />
+        </EntityType>
+        <EntityType Name="Jogador">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Nascimento" Type="datetime" Nullable="false" />
+          <Property Name="Posicao" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="QTDEFaltas" Type="int" />
+          <Property Name="QTDECartoesAmarelo" Type="int" />
+          <Property Name="QTDECartoesVermelho" Type="int" />
+          <Property Name="QTDEGols" Type="int" />
+          <Property Name="Informacoes" Type="text" />
+          <Property Name="NumeroCamisa" Type="int" />
+          <Property Name="SelecaoID" Type="int" />
+        </EntityType>
+        <EntityType Name="Jogo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SelecaoCasa" Type="int" />
+          <Property Name="SelecaoVisitante" Type="int" />
+          <Property Name="PlacarCasa" Type="int" Nullable="false" />
+          <Property Name="PlacarVisitante" Type="int" Nullable="false" />
+          <Property Name="PenaltisCasa" Type="int" Nullable="false" />
+          <Property Name="PenaltisVisitante" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" />
+          <Property Name="Estadio" Type="int" />
+        </EntityType>
+        <EntityType Name="Selecao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Bandeira" Type="image" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Apelido" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Perfil" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Bloqueado" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Jogador__Selecao__4222D4EF">
+          <End Role="Selecao" Type="Self.Selecao" Multiplicity="0..1" />
+          <End Role="Jogador" Type="Self.Jogador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Selecao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogador">
+              <PropertyRef Name="SelecaoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Jogo__Estadio__4316F928">
+          <End Role="Estadio" Type="Self.Estadio" Multiplicity="0..1" />
+          <End Role="Jogo" Type="Self.Jogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estadio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogo">
+              <PropertyRef Name="Estadio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Jogo__SelecaoCas__440B1D61">
+          <End Role="Selecao" Type="Self.Selecao" Multiplicity="0..1" />
+          <End Role="Jogo" Type="Self.Jogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Selecao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogo">
+              <PropertyRef Name="SelecaoCasa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Jogo__SelecaoVis__44FF419A">
+          <End Role="Selecao" Type="Self.Selecao" Multiplicity="0..1" />
+          <End Role="Jogo" Type="Self.Jogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Selecao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogo">
+              <PropertyRef Name="SelecaoVisitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Imagens_Jogador">
+          <End Role="Jogador" Type="Self.Jogador" Multiplicity="1" />
+          <End Role="Imagens" Type="Self.Imagens" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Jogador">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Imagens">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sessao2ModelStoreContainer">
+          <EntitySet Name="Estadio" EntityType="Self.Estadio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagens" EntityType="Self.Imagens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jogador" EntityType="Self.Jogador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jogo" EntityType="Self.Jogo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Selecao" EntityType="Self.Selecao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Jogador__Selecao__4222D4EF" Association="Self.FK__Jogador__Selecao__4222D4EF">
+            <End Role="Selecao" EntitySet="Selecao" />
+            <End Role="Jogador" EntitySet="Jogador" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Jogo__Estadio__4316F928" Association="Self.FK__Jogo__Estadio__4316F928">
+            <End Role="Estadio" EntitySet="Estadio" />
+            <End Role="Jogo" EntitySet="Jogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Jogo__SelecaoCas__440B1D61" Association="Self.FK__Jogo__SelecaoCas__440B1D61">
+            <End Role="Selecao" EntitySet="Selecao" />
+            <End Role="Jogo" EntitySet="Jogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Jogo__SelecaoVis__44FF419A" Association="Self.FK__Jogo__SelecaoVis__44FF419A">
+            <End Role="Selecao" EntitySet="Selecao" />
+            <End Role="Jogo" EntitySet="Jogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Imagens_Jogador" Association="Self.FK_Imagens_Jogador">
+            <End Role="Jogador" EntitySet="Jogador" />
+            <End Role="Imagens" EntitySet="Imagens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Sessao2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Estadio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Jogo" Relationship="Self.FK__Jogo__Estadio__4316F928" FromRole="Estadio" ToRole="Jogo" />
+        </EntityType>
+        <EntityType Name="Imagens">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Arquivo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Jogador" Relationship="Self.FK_Imagens_Jogador" FromRole="Imagens" ToRole="Jogador" />
+        </EntityType>
+        <EntityType Name="Jogador">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nascimento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Posicao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QTDEFaltas" Type="Int32" />
+          <Property Name="QTDECartoesAmarelo" Type="Int32" />
+          <Property Name="QTDECartoesVermelho" Type="Int32" />
+          <Property Name="QTDEGols" Type="Int32" />
+          <Property Name="Informacoes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroCamisa" Type="Int32" />
+          <Property Name="SelecaoID" Type="Int32" />
+          <NavigationProperty Name="Imagens" Relationship="Self.FK_Imagens_Jogador" FromRole="Jogador" ToRole="Imagens" />
+          <NavigationProperty Name="Selecao" Relationship="Self.FK__Jogador__Selecao__4222D4EF" FromRole="Jogador" ToRole="Selecao" />
+        </EntityType>
+        <EntityType Name="Jogo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SelecaoCasa" Type="Int32" />
+          <Property Name="SelecaoVisitante" Type="Int32" />
+          <Property Name="PlacarCasa" Type="Int32" Nullable="false" />
+          <Property Name="PlacarVisitante" Type="Int32" Nullable="false" />
+          <Property Name="PenaltisCasa" Type="Int32" Nullable="false" />
+          <Property Name="PenaltisVisitante" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Precision="3" />
+          <Property Name="Estadio" Type="Int32" />
+          <NavigationProperty Name="Estadio1" Relationship="Self.FK__Jogo__Estadio__4316F928" FromRole="Jogo" ToRole="Estadio" />
+          <NavigationProperty Name="Selecao" Relationship="Self.FK__Jogo__SelecaoCas__440B1D61" FromRole="Jogo" ToRole="Selecao" />
+          <NavigationProperty Name="Selecao1" Relationship="Self.FK__Jogo__SelecaoVis__44FF419A" FromRole="Jogo" ToRole="Selecao" />
+        </EntityType>
+        <EntityType Name="Selecao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bandeira" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Jogador" Relationship="Self.FK__Jogador__Selecao__4222D4EF" FromRole="Selecao" ToRole="Jogador" />
+          <NavigationProperty Name="Jogo" Relationship="Self.FK__Jogo__SelecaoCas__440B1D61" FromRole="Selecao" ToRole="Jogo" />
+          <NavigationProperty Name="Jogo1" Relationship="Self.FK__Jogo__SelecaoVis__44FF419A" FromRole="Selecao" ToRole="Jogo" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apelido" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bloqueado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Jogo__Estadio__4316F928">
+          <End Role="Estadio" Type="Self.Estadio" Multiplicity="0..1" />
+          <End Role="Jogo" Type="Self.Jogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estadio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogo">
+              <PropertyRef Name="Estadio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Imagens_Jogador">
+          <End Role="Jogador" Type="Self.Jogador" Multiplicity="1" />
+          <End Role="Imagens" Type="Self.Imagens" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Jogador">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Imagens">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Jogador__Selecao__4222D4EF">
+          <End Role="Selecao" Type="Self.Selecao" Multiplicity="0..1" />
+          <End Role="Jogador" Type="Self.Jogador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Selecao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogador">
+              <PropertyRef Name="SelecaoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Jogo__SelecaoCas__440B1D61">
+          <End Role="Selecao" Type="Self.Selecao" Multiplicity="0..1" />
+          <End Role="Jogo" Type="Self.Jogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Selecao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogo">
+              <PropertyRef Name="SelecaoCasa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Jogo__SelecaoVis__44FF419A">
+          <End Role="Selecao" Type="Self.Selecao" Multiplicity="0..1" />
+          <End Role="Jogo" Type="Self.Jogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Selecao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jogo">
+              <PropertyRef Name="SelecaoVisitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sessao2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Estadio" EntityType="Self.Estadio" />
+          <EntitySet Name="Imagens" EntityType="Self.Imagens" />
+          <EntitySet Name="Jogador" EntityType="Self.Jogador" />
+          <EntitySet Name="Jogo" EntityType="Self.Jogo" />
+          <EntitySet Name="Selecao" EntityType="Self.Selecao" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Jogo__Estadio__4316F928" Association="Self.FK__Jogo__Estadio__4316F928">
+            <End Role="Estadio" EntitySet="Estadio" />
+            <End Role="Jogo" EntitySet="Jogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Imagens_Jogador" Association="Self.FK_Imagens_Jogador">
+            <End Role="Jogador" EntitySet="Jogador" />
+            <End Role="Imagens" EntitySet="Imagens" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Jogador__Selecao__4222D4EF" Association="Self.FK__Jogador__Selecao__4222D4EF">
+            <End Role="Selecao" EntitySet="Selecao" />
+            <End Role="Jogador" EntitySet="Jogador" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Jogo__SelecaoCas__440B1D61" Association="Self.FK__Jogo__SelecaoCas__440B1D61">
+            <End Role="Selecao" EntitySet="Selecao" />
+            <End Role="Jogo" EntitySet="Jogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Jogo__SelecaoVis__44FF419A" Association="Self.FK__Jogo__SelecaoVis__44FF419A">
+            <End Role="Selecao" EntitySet="Selecao" />
+            <End Role="Jogo" EntitySet="Jogo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Sessao2ModelStoreContainer" CdmEntityContainer="Sessao2Entities">
+          <EntitySetMapping Name="Estadio">
+            <EntityTypeMapping TypeName="Sessao2Model.Estadio">
+              <MappingFragment StoreEntitySet="Estadio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imagens">
+            <EntityTypeMapping TypeName="Sessao2Model.Imagens">
+              <MappingFragment StoreEntitySet="Imagens">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Arquivo" ColumnName="Arquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jogador">
+            <EntityTypeMapping TypeName="Sessao2Model.Jogador">
+              <MappingFragment StoreEntitySet="Jogador">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Nascimento" ColumnName="Nascimento" />
+                <ScalarProperty Name="Posicao" ColumnName="Posicao" />
+                <ScalarProperty Name="QTDEFaltas" ColumnName="QTDEFaltas" />
+                <ScalarProperty Name="QTDECartoesAmarelo" ColumnName="QTDECartoesAmarelo" />
+                <ScalarProperty Name="QTDECartoesVermelho" ColumnName="QTDECartoesVermelho" />
+                <ScalarProperty Name="QTDEGols" ColumnName="QTDEGols" />
+                <ScalarProperty Name="Informacoes" ColumnName="Informacoes" />
+                <ScalarProperty Name="NumeroCamisa" ColumnName="NumeroCamisa" />
+                <ScalarProperty Name="SelecaoID" ColumnName="SelecaoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jogo">
+            <EntityTypeMapping TypeName="Sessao2Model.Jogo">
+              <MappingFragment StoreEntitySet="Jogo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SelecaoCasa" ColumnName="SelecaoCasa" />
+                <ScalarProperty Name="SelecaoVisitante" ColumnName="SelecaoVisitante" />
+                <ScalarProperty Name="PlacarCasa" ColumnName="PlacarCasa" />
+                <ScalarProperty Name="PlacarVisitante" ColumnName="PlacarVisitante" />
+                <ScalarProperty Name="PenaltisCasa" ColumnName="PenaltisCasa" />
+                <ScalarProperty Name="PenaltisVisitante" ColumnName="PenaltisVisitante" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Estadio" ColumnName="Estadio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Selecao">
+            <EntityTypeMapping TypeName="Sessao2Model.Selecao">
+              <MappingFragment StoreEntitySet="Selecao">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Bandeira" ColumnName="Bandeira" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="Sessao2Model.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Apelido" ColumnName="Apelido" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+                <ScalarProperty Name="Bloqueado" ColumnName="Bloqueado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

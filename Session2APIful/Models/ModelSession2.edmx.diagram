@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d2444604093a4555b36550e2239752ea" Name="Diagram1">
+        <EntityTypeShape EntityType="Sessao2Model.Estadio" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sessao2Model.Imagens" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sessao2Model.Jogador" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sessao2Model.Jogo" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sessao2Model.Selecao" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sessao2Model.Usuario" Width="1.5" PointX="5.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="Sessao2Model.FK__Jogo__Estadio__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="Sessao2Model.FK_Imagens_Jogador" ManuallyRouted="false" />
+        <AssociationConnector Association="Sessao2Model.FK__Jogador__Selecao__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="Sessao2Model.FK__Jogo__SelecaoCas__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="Sessao2Model.FK__Jogo__SelecaoVis__44FF419A" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
